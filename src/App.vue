@@ -5,12 +5,14 @@ type Glyph = { lvl: number; xpNeeded: number }
 type Dungeon = { lvl: number; enemiesLvl: number; xp: number }
 
 const minDungeonLvl = 54
+const lvl = ref<number | undefined>()
 
 const nightmareDungeons: Dungeon[] = [...Array(100)].map((_, idx) => ({
   lvl: idx + 1,
   enemiesLvl: minDungeonLvl + idx,
   xp: (idx + 1) * 2 + 2
 }))
+
 const glyphs: Glyph[] = [
   { lvl: 1, xpNeeded: 0 },
   { lvl: 2, xpNeeded: 8 },
@@ -34,11 +36,10 @@ const glyphs: Glyph[] = [
   { lvl: 20, xpNeeded: 332 },
   { lvl: 21, xpNeeded: 361 }
 ]
-const lvl = ref<number | undefined>()
 
 const displayedDungeons = computed(() =>
   lvl.value && Number.isInteger(+lvl.value) && +lvl.value <= 100 && +lvl.value >= minDungeonLvl
-    ? [...nightmareDungeons].splice(+lvl.value - minDungeonLvl - 2, 10)
+    ? [...nightmareDungeons].splice(+lvl.value - minDungeonLvl, 11)
     : nightmareDungeons
 )
 
