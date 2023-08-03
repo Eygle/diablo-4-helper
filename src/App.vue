@@ -4,9 +4,11 @@ import { computed, ref } from 'vue'
 type Glyph = { lvl: number; xpNeeded: number }
 type Dungeon = { lvl: number; enemiesLvl: number; xp: number }
 
+const minDungeonLvl = 54
+
 const nightmareDungeons: Dungeon[] = [...Array(100)].map((_, idx) => ({
   lvl: idx + 1,
-  enemiesLvl: 54 + idx,
+  enemiesLvl: minDungeonLvl + idx,
   xp: (idx + 1) * 2 + 2
 }))
 const glyphs: Glyph[] = [
@@ -35,8 +37,8 @@ const glyphs: Glyph[] = [
 const lvl = ref<number | undefined>()
 
 const displayedDungeons = computed(() =>
-  lvl.value && Number.isInteger(+lvl.value) && +lvl.value <= 100 && +lvl.value >= 54
-    ? [...nightmareDungeons].splice(+lvl.value - 53 - 1, 10)
+  lvl.value && Number.isInteger(+lvl.value) && +lvl.value <= 100 && +lvl.value >= minDungeonLvl
+    ? [...nightmareDungeons].splice(+lvl.value - minDungeonLvl - 2, 10)
     : nightmareDungeons
 )
 
