@@ -5,7 +5,7 @@ type Glyph = { lvl: number; xpNeeded: number }
 type Dungeon = { lvl: number; enemiesLvl: number; xp: number }
 
 const minDungeonLvl = 54
-const lvl = ref<string | undefined>()
+const lvl = ref<string | number | undefined>()
 
 const nightmareDungeons: Dungeon[] = [...Array(100)].map((_, idx) => ({
   lvl: idx + 1,
@@ -37,7 +37,7 @@ const glyphs: Glyph[] = [
   { lvl: 21, xpNeeded: 361 }
 ]
 
-function isValidLvl(lvl: string | undefined): lvl is string {
+function isValidLvl(lvl: string | number | undefined): lvl is string {
   return !!lvl && Number.isInteger(+lvl) && +lvl <= 100
 }
 
@@ -73,6 +73,8 @@ function calculateTotalXpNeeded(targetGlyph: Glyph) {
           type="text"
           class="max-w-[80px] peer relative block w-full flex-1 rounded bg-slate-500 outline-none transition-all duration-200 ease-linear motion-reduce:transition-none min-h-[38px] px-4"
         />
+        <button v-if="lvl" class="px-2 border border-slate-700 rounded-full font-extrabold" @click="lvl = +lvl + 1">+</button>
+        <button v-if="lvl" class="px-2 border border-slate-700 rounded-full font-extrabold" @click="lvl = +lvl - 1">-</button>
       </div>
     </div>
     <div class="flex flex-col space-y-12 justify-stretch lg:flex-row lg:space-x-12 lg:space-y-0">
